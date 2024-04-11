@@ -1,4 +1,8 @@
+//app.ts
+
 import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
 import { config } from './config';
 import Controller from "./interfaces/controller.interface";
 
@@ -7,9 +11,15 @@ class App {
 
     constructor(controllers: Controller[]) {
         this.app = express();
+        this.initializeMiddlewares();
         this.initializeControllers(controllers);
     }
- 
+    
+    private initializeMiddlewares(): void {
+        this.app.use(bodyParser.json());
+        this.app.use(morgan('dev'));
+    }
+
     private initializeControllers(controllers: Controller[]): void {
         controllers.forEach((controller) => {
             this.app.use('/', controller.router);

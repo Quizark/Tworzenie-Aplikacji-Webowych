@@ -1,3 +1,5 @@
+//index.controller.ts
+
 import Controller from '../interfaces/controller.interface';
 import {Request, Response, NextFunction, Router} from 'express';
 import path from 'path';
