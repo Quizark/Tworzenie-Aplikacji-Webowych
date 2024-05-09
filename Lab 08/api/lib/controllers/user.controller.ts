@@ -27,13 +27,41 @@ class UserController implements Controller {
         this.router.get(`${this.path}/users`, auth, admin, this.getAllUsers); // Nowy endpoint do pobierania wszystkich użytkowników (dla administratora)
     }
 
-   private authenticate = async (request: Request, response: Response, next: NextFunction) => {
-       // Implementacja metody authenticate bez zmian
-   };
+    private authenticate = async (request: Request, response: Response, next: NextFunction) => {
+        const {login, password} = request.body;
+     
+        try {
+            const user = await this.userService.getByEmailOrName(login);
+            if (!user) {
+                response.status(401).json({error: 'Unauthorized'});
+            }
+            await this.passwordService.authorize(user.id, await this.passwordService.hashPassword(password));
+            const token = await this.tokenService.create(user);
+            response.status(200).json(this.tokenService.getToken(token));
+        } catch (error) {
+            console.error(`Validation Error: ${error.message}`);
+            response.status(401).json({error: 'Unauthorized'});
+        }
+     };
 
-   private createNewOrUpdate = async (request: Request, response: Response, next: NextFunction) => {
-       // Implementacja metody createNewOrUpdate bez zmian
-   };
+     private createNewOrUpdate = async (request: Request, response: Response, next: NextFunction) => {
+        const userData = request.body;
+        try {
+            const user = await this.userService.createNewOrUpdate(userData);
+            if (userData.password) {
+                const hashedPassword = await this.passwordService.hashPassword(userData.password)
+                await this.passwordService.createOrUpdate({
+                    userId: user._id,
+                    password: hashedPassword
+                });
+            }
+            response.status(200).json(user);
+        } catch (error) {
+            console.error(`Validation Error: ${error.message}`);
+            response.status(400).json({error: 'Bad request', value: error.message});
+        }
+     
+     };
 
    private resetPassword = async (request: Request, response: Response, next: NextFunction) => {
        const { email } = request.body;
@@ -57,7 +85,15 @@ class UserController implements Controller {
    };
 
    private removeHashSession = async (request: Request, response: Response, next: NextFunction) => {
-       // Implementacja metody removeHashSession bez zmian
+        const {userId} = request.params
+    
+        try {
+            const result = await this.tokenService.remove(userId);
+            response.status(200).send(result);
+        } catch (error) {
+            console.error(`Validation Error: ${error.message}`);
+            response.status(401).json({error: 'Unauthorized'});
+        }
    };
 
    private getAllUsers = async (request: Request, response: Response, next: NextFunction) => {
@@ -71,7 +107,6 @@ class UserController implements Controller {
    };
 
    private generateRandomPassword(): string {
-       // Implementacja generowania losowego hasła - przykładowa implementacja
        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
        let password = '';
        for (let i = 0; i < 8; i++) {

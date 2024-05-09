@@ -58,10 +58,6 @@ class DataService {
           throw new Error('Wystąpił błąd podczas usuwania wszystkich danych');
       }
   }
- 
-
-   
-   
 
 }
 
