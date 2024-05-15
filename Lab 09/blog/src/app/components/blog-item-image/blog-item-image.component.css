@@ -1,0 +1,7 @@
+/* blog-item-image.component.css */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  

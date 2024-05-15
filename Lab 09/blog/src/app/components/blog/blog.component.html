@@ -1,0 +1,8 @@
+<!-- blog.component.html -->
+
+<div class="blog-container">
+  <div *ngFor="let item of items" class="blog-item">
+    <app-blog-item [image]="item.image" [text]="item.text"></app-blog-item>
+  </div>
+</div>
+
