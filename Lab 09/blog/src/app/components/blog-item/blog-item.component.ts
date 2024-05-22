@@ -7,12 +7,12 @@ import {BlogItemTextComponent} from "../blog-item-text/blog-item-text.component"
 @Component({
  selector: 'app-blog-item',
  standalone: true,
- imports: [BlogItemImageComponent, BlogItemTextComponent],
+ imports: [BlogItemTextComponent, BlogItemImageComponent],
  templateUrl: './blog-item.component.html',
  styleUrl: './blog-item.component.css'
 })
 export class BlogItemComponent {
  @Input() image?: string;
  @Input() text?: string;
-
+ @Input() id?: number;
 }
