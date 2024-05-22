@@ -1,14 +1,8 @@
 <!-- blog.component.html -->
 
-<div class="blog-container">
-  <div *ngFor="let item of items$ | filter:filterText">
-    <app-blog-item
-      [image]="item.image"
-      [text]="item.text"
-      [id]="item.id">
-    </app-blog-item>
-   </div>
-   
-   
-</div>
-
+<div *ngFor="let item of items$">
+ <app-blog-item
+ [image]="item.image"
+ [text]="item.text">
+ </app-blog-item>
+ </div>

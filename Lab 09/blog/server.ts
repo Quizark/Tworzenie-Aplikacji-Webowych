@@ -1,3 +1,5 @@
+//server.ts
+
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
 import express from 'express';
