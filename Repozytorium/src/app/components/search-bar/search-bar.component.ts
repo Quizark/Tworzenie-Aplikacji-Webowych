@@ -1,5 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from
-    '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {Router, ActivatedRoute} from '@angular/router';
 import {TextFormatDirective} from "../../directives/text-format.directive";
@@ -26,10 +25,9 @@ export class SearchBarComponent implements OnInit {
   }
 
   sendFilter() {
-    this.router.navigate(['/'], {queryParams: {name:
+    this.router.navigate(['/blog'], {queryParams: {name:
         this.filterText?.toLowerCase()}});
     this.name.emit(this.filterText);
-  }
-
+   }   
 }
 
