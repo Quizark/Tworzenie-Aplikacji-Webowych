@@ -1,0 +1,67 @@
+<section class="signup container">
+    <h1 class="entry-title"><span>Create Account</span></h1>
+    <hr>
+    <form class="form-horizontal" method="post" name="signup" id="signup">
+        <div class="form-group">
+            <label class="control-label col-sm-3">Email<span class="text-danger">*</span></label>
+            <div class="col-md-8 col-sm-9">
+                <div class="input-group" [ngClass]="{'has-error': email.invalid && email.touched}">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input type="email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$"
+                           class="form-control" name="emailid" id="emailid" placeholder="Type email"
+                           [(ngModel)]="credentials.email" #email="ngModel">
+                </div>
+                <span class="help-block" *ngIf="email.errors?.['pattern'] && email.touched" 
+      [ngClass]="'error-message'">Email is invalid</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Password<span class="text-danger">*</span></label>
+            <div class="col-md-5 col-sm-8">
+                <div class="input-group" [ngClass]="{'has-error': password.invalid && password.touched}">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input type="password" class="form-control" name="password" id="password"
+                           placeholder="Wpisz hasło (5-15 znaków)" [(ngModel)]="credentials.password" #password="ngModel"
+                           required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,15}">
+                </div>
+                <span class="help-block" *ngIf="password.errors?.['pattern'] && password.touched" [ngClass]="'error-message'">
+                  Password must be between 5 to 15 characters long and contain at least one digit, one lowercase letter, and one uppercase letter
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-sm-3">Re-password <span class="text-danger">*</span></label>
+            <div class="col-md-5 col-sm-8">
+                <div class="input-group" [ngClass]="{'has-error': cpassword.invalid && cpassword.touched}">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input type="password" class="form-control" name="cpassword" id="cpassword"
+                           placeholder="Re-password" [(ngModel)]="credentials.cpassword" #cpassword="ngModel"
+                           required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,15}">
+                </div>
+                <span class="help-block" *ngIf="cpassword.errors?.['required'] && cpassword.touched" [ngClass]="'error-message'">
+                    Re-password is required
+                </span>
+                <span class="help-block" *ngIf="credentials.password !== credentials.cpassword && cpassword.touched" [ngClass]="'error-message'">
+                    Passwords do not match
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Name <span class="text-danger">*</span></label>
+            <div class="col-md-8 col-sm-9">
+                <input type="text" class="form-control" name="mem_name" id="mem_name" placeholder="Type name"
+                       [(ngModel)]="credentials.name" required #mem_name="ngModel">
+                <span class="help-block" *ngIf="!credentials.name && mem_name.touched" [ngClass]="'error-message'">
+                    Name is required
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-10">
+                <button *ngIf="!(email.errors?.['pattern'] && email.touched) && !(password.errors?.['pattern'] && password.touched)" (click)="create()" name="Submit" type="submit" class="btn btn-primary">Sing Up
+                </button>
+            </div>
+        </div>
+    </form>
+</section>

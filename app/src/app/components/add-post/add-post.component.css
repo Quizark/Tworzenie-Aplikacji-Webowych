@@ -1,0 +1,14 @@
+.form-textarea {
+    border-radius: 10px;
+    width: 100%;
+}
+.custom-alert-bad {
+    background-color: #e09faa; /* Tło */
+    color: #df1a1a; /* Tekst */
+    border-color: #000000; /* Obramowanie */
+}
+.custom-alert-good {
+    background-color: #9fe0a8; /* Tło */
+    color: #1adf6c; /* Tekst */
+    border-color: #000000; /* Obramowanie */
+}
